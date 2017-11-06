@@ -1,0 +1,2 @@
+def say():
+    return "wolas"
