@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from uuid import uuid4
 
 import re
@@ -57,14 +60,13 @@ def error(bot, update, error):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, error)
 
-def javiTest(bot, update):
-    update.message.reply_text('javi')
-    mensaje = handle()
-    update.message.reply_text(mensaje)
-
 def tempTest(bot, update):
     mensaje = handle('temp')
-    update.message.reply_text(mensaje)
+    update.message.reply_text('La temperatura es de --> %.2f °C'% mensaje)
+    mensaje1 = handle('wind')
+    update.message.reply_text('La velocidad del viento es de --> %.2f km/h'% mensaje1)
+    mensaje2 = handle('humidity')
+    update.message.reply_text('La humedad es del --> %f'% mensaje2)
 
 def main():
     # Create the Updater and pass it your bot's token.
@@ -76,7 +78,6 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("javiTest", javiTest))
     dp.add_handler(CommandHandler("tempTest", tempTest))
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(InlineQueryHandler(inlinequery))
@@ -96,6 +97,12 @@ def handle(entry):
     if (entry == 'temp'):
         print(weather.getTempZaragoza())
         return weather.getTempZaragoza()
+    if (entry == 'wind'):
+        print(weather.getWindZaragoza())
+        return weather.getWindZaragoza()
+    if (entry == 'humidity'):
+        print(weather.getHumidityZaragoza())
+        return weather.getHumidityZaragoza()
     else:
         return funcs.say()
 
