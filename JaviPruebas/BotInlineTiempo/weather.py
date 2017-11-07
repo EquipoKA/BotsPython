@@ -40,19 +40,30 @@ def parseJSON2(rawdata):
 	return msTokmh(float(wind))
 
 def parseJSON3(rawdata):
-    	'''
+	'''
 	for i in rawdata['main']:
 		print(rawdata['main'][i])
 	'''
 	humidity = rawdata['main']['humidity']
 
 	return humidity
+    
+#def parseJSON4(rawdata):
+#	'''
+#	for i in rawdata['main']:
+#		print(rawdata['main'][i])
+#	'''
+#	clouds = rawdata['weather']['description']
+
+#	return clouds
+
+#def getCloudsZaragoza():
+#	return parseJSON4(getJSONRDawData(url))
 
 def getHumidityZaragoza():
 	return parseJSON3(getJSONRDawData(url))
 
 def getWindZaragoza():
-	print(parseJSON2(getJSONRDawData(url)))
 	return parseJSON2(getJSONRDawData(url))
 
 def getTempZaragoza():
@@ -73,6 +84,7 @@ url = assembleCallName()
 print(getTempZaragoza())
 print(getWindZaragoza())
 print(getHumidityZaragoza())
+#print(getCloudsZaragoza())
 
 '''
 {'coord': {'lon': -0.88, 'lat': 41.66}, 'weather': [{'id': 801, 'main': 'Clouds', 'description': 'few clouds', 'icon': '02n'}], 'base': 'stations', 'main': {'temp': 281.44, 'pressure': 1021, 'humidity': 57, 'temp_min': 280.15, 'temp_max': 283.15}, 'visibility': 10000, 'wind': {'speed': 11.8, 'deg': 290}, 'clouds': {'all': 20}, 'dt': 1509991200, 'sys': {'type': 1, 'id': 5510, 'message': 0.0019, 'country': 'ES', 'sunrise': 1509950555, 'sunset': 1509987073}, 'id': 3104324, 'name': 'Zaragoza', 'cod': 200}
