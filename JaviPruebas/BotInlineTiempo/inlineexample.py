@@ -13,6 +13,8 @@ from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 import logging
 import funcs, weather
 
+simb1 = "%"
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -66,7 +68,9 @@ def tempTest(bot, update):
     mensaje1 = handle('wind')
     update.message.reply_text('La velocidad del viento es de --> %.2f km/h'% mensaje1)
     mensaje2 = handle('humidity')
-    update.message.reply_text('La humedad es del --> %f'% mensaje2)
+    update.message.reply_text('La humedad es del --> %.0f %s '% (mensaje2 , simb1))
+   # mensaje3 = handle('clouds')
+   # update.message.reply_text('El cielo esta --> %s' % mensaje3)
 
 def main():
     # Create the Updater and pass it your bot's token.
@@ -103,6 +107,9 @@ def handle(entry):
     if (entry == 'humidity'):
         print(weather.getHumidityZaragoza())
         return weather.getHumidityZaragoza()
+   # if(entry == 'clouds'):
+   #     print(weather.getCloudsZaragoza())
+   #     return weather.getCloudsZaragoza()
     else:
         return funcs.say()
 
