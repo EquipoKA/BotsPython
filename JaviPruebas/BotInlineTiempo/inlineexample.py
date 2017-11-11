@@ -12,7 +12,10 @@ from telegram import InlineQueryResultArticle, ParseMode, \
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 import logging
 import funcs, weather
+import picamera
+import time
 
+camera = picamera.PiCamera()
 simb1 = "%"
 
 # Enable logging
@@ -71,6 +74,10 @@ def tempTest(bot, update):
     update.message.reply_text('La humedad es del --> %.0f %s '% (mensaje2 , simb1))
    # mensaje3 = handle('clouds')
    # update.message.reply_text('El cielo esta --> %s' % mensaje3)
+def camTest(bot, update):
+    foto = "/tmp/" + (time.strftime("%H%M%S-%d%m%y")) + ".jpeg"
+    os.system(camera.capture('%s'% foto))
+    bot.send_photo(update.id, open(foto), 'rb')
 
 def main():
     # Create the Updater and pass it your bot's token.
@@ -83,6 +90,7 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("tempTest", tempTest))
+    dp.add_handler(CommandHandler("cameraTest", camTest))
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(InlineQueryHandler(inlinequery))
 
