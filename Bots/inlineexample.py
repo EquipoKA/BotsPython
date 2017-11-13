@@ -12,10 +12,10 @@ from telegram import InlineQueryResultArticle, ParseMode, \
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler
 import logging
 import funcs, weather
-import picamera
+#mport picamera
 import time
 
-camera = picamera.PiCamera()
+#camera = picamera.PiCamera()
 simb1 = "%"
 
 # Enable logging
@@ -96,14 +96,14 @@ def menuCam(bot, update):
 
 def camPhoto(bot, update, myd):
     foto = "/tmp/" + (time.strftime("%H:%M:%S-%d/%m/%y")) + ".jpeg"
-    camera.capture('%s'% foto)
+    #camera.capture('%s'% foto)
     bot.send_photo(myd, open(foto),time.strftime("Foto tomada en hora y fecha: %H:%M:%S - %d/%m/%y"))
 
 def camVideo(bot, update, myd, mytime):
     video = "/tmp/" + (time.strftime("%H:%M:%S-%d/%m/%y")) + ".h264"
-    camera.start_recording('%s'% video)
+#camera.start_recording('%s'% video)
     time.sleep(mytime)
-    camera.stop_recording()
+ #   camera.stop_recording()
     bot.send_video(myd, open(video),time.strftime("Video grabado en hora y fecha: %H:%M:%S - %d/%m/%y"))
 
 def main():
