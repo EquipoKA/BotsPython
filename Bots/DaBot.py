@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import logging, inlineexample
+import logging, weather, funcs
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 
@@ -51,7 +51,43 @@ def handle(bot, update, choice, query):
             bot.edit_message_text(text="Voy a mandarte los truenos...",
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
+            tempBot(bot, update, query)
         
+
+def tempBot(bot, update, query):
+    sbt = "%"
+    temperatura = handleTemp('temp')
+    mensaje1 = handleTemp('wind')
+    mensaje2 = handleTemp('humidity')
+
+
+    bot.edit_message_text(text="La temperatura es de {0:.2f} ºC".format(temperatura),
+                            chat_id=query.message.chat_id,
+                            message_id=query.message.message_id)
+
+'''
+    bot.edit_message_text('La temperatura es de --> %.2f °C'% mensaje)
+    
+    bot.edit_message_text('La velocidad del viento es de --> %.2f km/h'% mensaje1)
+    
+    bot.edit_message_text('La humedad es del --> %.0f %s '% (mensaje2 , sbt))
+'''
+
+def handleTemp(entry):
+    if (entry == 'temp'):
+        print(weather.getTempZaragoza())
+        return weather.getTempZaragoza()
+    if (entry == 'wind'):
+        print(weather.getWindZaragoza())
+        return weather.getWindZaragoza()
+    if (entry == 'humidity'):
+        print(weather.getHumidityZaragoza())
+        return weather.getHumidityZaragoza()
+   # if(entry == 'clouds'):
+   #     print(weather.getCloudsZaragoza())
+   #     return weather.getCloudsZaragoza()
+    else:
+        return funcs.say()
 
 def main():
     # TOKEN
