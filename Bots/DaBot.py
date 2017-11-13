@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import logging, weather, funcs
+import logging, weather, funcs, camera
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 
@@ -43,10 +43,13 @@ def handle(bot, update, choice, query):
         bot.edit_message_text(text="Voy a mandarte un vídeo...",
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
+        camera.authoVid(bot,update,query.message.chat_id,query.message.message_id)                  
     elif (choice == '2'):
-            bot.edit_message_text(text="Voy a mandarte un afoto...",
+            bot.edit_message_text(text="Voy a mandarte una foto...",
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
+            camera.authoCam(bot,update,query.message.chat_id,query.message.message_id)
+
     elif (choice == '3'):
             bot.edit_message_text(text="Voy a mandarte los truenos...",
                           chat_id=query.message.chat_id,
@@ -57,13 +60,24 @@ def handle(bot, update, choice, query):
 def tempBot(bot, update, query):
     sbt = "%"
     temperatura = handleTemp('temp')
-    mensaje1 = handleTemp('wind')
-    mensaje2 = handleTemp('humidity')
+    viento = handleTemp('wind')
+    humedad = handleTemp('humidity')
 
 
-    bot.edit_message_text(text="La temperatura es de {0:.2f} ºC".format(temperatura),
+    bot.sendMessage(text="La temperatura es de {0:.2f} ºC".format(temperatura),
                             chat_id=query.message.chat_id,
                             message_id=query.message.message_id)
+
+    
+    bot.sendMessage(text="La velocidad del viento es de {0:.2f} km/h".format(viento),
+                            chat_id=query.message.chat_id,
+                            message_id=query.message.message_id)
+
+    
+    bot.sendMessage(text="La humedad es del {0:.2f} %".format(humedad),
+                            chat_id=query.message.chat_id,
+                            message_id=query.message.message_id)
+                        
 
 '''
     bot.edit_message_text('La temperatura es de --> %.2f °C'% mensaje)
