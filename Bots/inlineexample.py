@@ -76,12 +76,11 @@ def tempTest(bot, update):
    # update.message.reply_text('El cielo esta --> %s' % mensaje3)
 
 def authoCam(bot, update):
-	chat_id = update.message.chat_id
-	for i in range(len(authors)):
-		if(chat_id==authors[i]):
-			menuCam(bot,update)
-		else:
-			update.message.reply_text('No tienes autoridad sobre esta Raspberry pi 3 unlucky')		
+    chat_id = update.message.chat_id
+    if (chat_id in authors):
+	    menuCam(bot,update)
+    else:
+		update.message.reply_text('No tienes autoridad sobre esta Raspberry pi 3 unlucky')		
 
 def menuCam(bot, update):
     mytime = 5
