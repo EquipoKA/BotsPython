@@ -38,11 +38,11 @@ def camPhoto(bot, update, myd):
 def camVideo(bot, update, myd):
     video = "/tmp/" + (time.strftime("%H%M%S%d%m%y")) + ".h264"
     camera.start_recording('%s'% video)	   
-    time.sleep(5)
+    time.sleep(15)
     camera.stop_recording()
     os.system("MP4Box -add "+ video + " " + video + mp4_video)
 #    os.system("rm " + video)
     footage = video + mp4_video
-    bot.send_video(myd, open(footage),time.strftime("Foto tomada en hora y fecha: %H:%M:%S - %d/%m/%y"))
+    bot.send_video(myd, open(footage),time.strftime("Video grabado en hora y fecha: %H:%M:%S - %d/%m/%y"))
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import logging, weather, funcs, camera
+import logging, weather, funcs, camera, pir
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 
@@ -10,21 +10,21 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-def start(bot, update):
+def menu(bot, update):
     ''' Aquí se definen los botones '''
     keyboard = [[InlineKeyboardButton("Vídeo", callback_data='1'),
-                 InlineKeyboardButton("Foto", callback_data='2'), InlineKeyboardButton("Meteoro", callback_data='3')]]
+                 InlineKeyboardButton("Foto", callback_data='2'), InlineKeyboardButton("Tiempo", callback_data='3'), InlineKeyboardButton("Seguridad", callback_data='4')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    update.message.reply_text('Please choose:', reply_markup=reply_markup)
+    update.message.reply_text('Elige:', reply_markup=reply_markup)
 
 
 def button(bot, update):
     ''' Aquí se ejecuta al seleccionar unos de los botones '''
     query = update.callback_query
-    cohice = "{}".format(query.data) # Surrender
-    handle(bot, update, cohice, query)
+    choice = "{}".format(query.data) # Surrender
+    handle(bot, update, choice, query)
 '''
     bot.edit_message_text(text="Selected option: {}".format(query.data),
                           chat_id=query.message.chat_id,
@@ -40,22 +40,27 @@ def error(bot, update, error):
 
 def handle(bot, update, choice, query):
     if (choice == '1'):
-        bot.edit_message_text(text="Voy a mandarte un vídeo...",
+        bot.edit_message_text(text="Voy a mandarte un vídeo",
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
         camera.authoVid(bot,update,query.message.chat_id)                  
     elif (choice == '2'):
-            bot.edit_message_text(text="Voy a mandarte una foto...",
+            bot.edit_message_text(text="Voy a mandarte una foto",
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
             camera.authoCam(bot,update,query.message.chat_id)
 
     elif (choice == '3'):
-            bot.edit_message_text(text="Voy a mandarte los truenos...",
+            bot.edit_message_text(text="Conectando a la atmosfera...",
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
             tempBot(bot, update, query)
-        
+       
+    elif (choice == '4'):
+	    bot.edit_message_text(text="Modo de vigilancia activado",
+			  chat_id=query.message.chat_id,
+			  message_id=query.message.message_id)
+	    pir.pir_mode(bot, update, query.message.chat_id) 
 
 def tempBot(bot, update, query):
     sbt = "%"
@@ -106,7 +111,7 @@ def handleTemp(entry):
 def main():
     # TOKEN
     updater = Updater('402078197:AAHdxsObm-IL6ko0VSlA8QDNGluPr3kiUAE')
-    updater.dispatcher.add_handler(CommandHandler('start', start))
+    updater.dispatcher.add_handler(CommandHandler('options', menu))
     updater.dispatcher.add_handler(CallbackQueryHandler(button))
     updater.dispatcher.add_handler(CommandHandler('help', help))
     updater.dispatcher.add_error_handler(error)
