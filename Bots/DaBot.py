@@ -43,12 +43,12 @@ def handle(bot, update, choice, query):
         bot.edit_message_text(text="Voy a mandarte un vídeo...",
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
-        camera.authoVid(bot,update,query.message.chat_id,query.message.message_id)                  
+        camera.authoVid(bot,update,query.message.chat_id)                  
     elif (choice == '2'):
             bot.edit_message_text(text="Voy a mandarte una foto...",
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
-            camera.authoCam(bot,update,query.message.chat_id,query.message.message_id)
+            camera.authoCam(bot,update,query.message.chat_id)
 
     elif (choice == '3'):
             bot.edit_message_text(text="Voy a mandarte los truenos...",
