@@ -1,0 +1,7 @@
+# camera.authoCam(bot,update,chat_id)
+import time
+from gpiozero import Motion_Sensor
+
+pir = Motion_Sensor(27)
+pir.wait_for_motion()
+print("MUERETE")
